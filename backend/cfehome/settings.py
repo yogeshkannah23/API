@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
 custom_apps = [
     'api',
+    'rest_framework',
 ]
 
 INSTALLED_APPS += custom_apps

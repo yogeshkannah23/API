@@ -2,8 +2,6 @@ import requests
 
 endpoint = "http://127.0.0.1:8000"
 
-response = requests.get(endpoint,params={'yogesh':['kannah','op']})
+response = requests.post(endpoint,params={'yogesh':['kannah','op']},json={'title':'Guns','content':'Used To shoot someone'})
 
 print(response.text)
-print(response.status_code)
-print(response.json()['name'])
