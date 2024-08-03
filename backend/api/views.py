@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from api.models import *
 from django.forms.models import model_to_dict
 from api.serializers import ProductSerializers
-from rest_framework import generics
+from rest_framework import generics,mixins,authentication,permissions
 
 # Create your views here.
 
@@ -61,10 +61,13 @@ class ProductCreateApiView(generics.CreateAPIView):
             serializer.save()
 
 class ProductListView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Product.objects.all()
     serializer_class = ProductSerializers
 
 class ProductUpdateView(generics.UpdateAPIView):
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.DjangoModelPermissions]
     queryset = Product.objects.all()
     serializer_class = ProductSerializers
 
@@ -78,5 +81,19 @@ class ProductDeleteView(generics.DestroyAPIView):
 
     def perform_destroy(self, instance):
         return super().perform_destroy(instance)
+
+class ProductMixinView(
+    generics.GenericAPIView,
+    mixins.ListModelMixin
+    ):
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializers
+
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs)
+    
+    
+    
 
 
