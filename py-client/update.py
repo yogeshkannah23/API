@@ -4,7 +4,7 @@ from getpass import getpass
 endpoint = "http://127.0.0.1:8000/auth/"
 user_name = 'kalai'
 # pass_word = getpass()
-pass_word = "yogesh@13"
+pass_word = "yogesh@123"
 auth_response = requests.post(endpoint,json={'username':user_name,'password':pass_word})
 
 

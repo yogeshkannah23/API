@@ -9,6 +9,7 @@ from django.forms.models import model_to_dict
 from api.serializers import ProductSerializers
 from rest_framework import generics,mixins,authentication,permissions
 from api.permissions import isStaffEditorPermission
+from api.mixins import isStaffEditorPermission
 # Create your views here.
 
 
@@ -66,13 +67,14 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializers
 
 class ProductUpdateView(generics.UpdateAPIView):
-    authentication_classes = [authentication.SessionAuthentication,
-                              authentication.TokenAuthentication
-                              ]
-    permission_classes = [isStaffEditorPermission]
+    # authentication_classes = [authentication.SessionAuthentication,
+                            #   authentication.TokenAuthentication
+                            #   ]
+    # permission_classes = [isStaffEditorPermission]
+    
     queryset = Product.objects.all()
     serializer_class = ProductSerializers
-
+    
     def perform_update(self, serializer):
         print(serializer.validated_data)
         serializer.save()
